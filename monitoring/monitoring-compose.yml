@@ -1,0 +1,54 @@
+# Copyright (c) Facebook, Inc. and its affiliates.
+
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+
+version: '3'
+
+# On a spare machine, run docker-compose -f monitoring-compose.yml up -d
+volumes:
+  whatsappPrometheusData:
+    driver: local
+  whatsappGrafanaData:
+    driver: local
+
+services:
+  mysqld-exporter:
+    image: prom/mysqld-exporter:v0.10.0
+    restart: always
+    ports:
+      - 9104:9104
+    environment:
+      DATA_SOURCE_NAME: "${WA_DB_USERNAME:?Missing env WA_DB_USERNAME}:${WA_DB_PASSWORD:?Missing env WA_DB_PASSWORD}@(${WA_DB_HOSTNAME:?Missing env WA_DB_HOSTNAME}:${WA_DB_PORT:?Missing env WA_DB_PORT})/"
+  prometheus:
+    image: docker.whatsapp.biz/prometheus:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.21.6 docker-compose <command> <options>)}
+    user: "root"
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - whatsappPrometheusData:/prometheus-data
+    environment:
+      WA_WEB_ENDPOINT: ${WA_WEB_ENDPOINT:?Missing env WA_WEB_ENDPOINT which is the web endpoint of enterprise client WA_ENT_HOSTNAME:WA_ENT_PORT}
+      WA_WEB_USERNAME: ${WA_WEB_USERNAME:?Missing env WA_WEB_USERNAME which is the username for /v1/users/login}
+      WA_WEB_PASSWORD: ${WA_WEB_PASSWORD:?Missing env WA_WEB_PASSWORD which is the password for /v1/users/login}
+      WA_MYSQLD_EXPORTER_ENDPOINT: 'mysqld-exporter:9104'
+      WA_DB_NODE_EXPORTER_ENDPOINT: ${WA_DB_HOSTNAME:?Missing env WA_DB_HOSTNAME for mysql server monitoring, start host-exporter-compose.yml on mysql server to expose metrics. Make sure prometheus could access port 9100 and 8080 }:9100
+      WA_CORE_ENDPOINT: ${WA_CORE_ENDPOINT:?Missing env WA_CORE_ENDPOINT for host and container monitoring, start host-exporter-compose.yml on biz client machine to expose metrics. Make sure prometheus could access port 9100 and 8080 }
+      WA_NODE_EXPORTER_PORT: ${WA_NODE_EXPORTER_PORT:-9100}
+      WA_CADVISOR_PORT: ${WA_CADVISOR_PORT:-8080}
+      WA_PROMETHEUS_STORAGE_TSDB_RETENTION: ${WA_PROMETHEUS_STORAGE_TSDB_RETENTION:-15d}
+    depends_on:
+      - 'mysqld-exporter'
+  grafana:
+    image: docker.whatsapp.biz/grafana:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.21.6 docker-compose <command> <options>)}
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - whatsappGrafanaData:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD:?Missing env GF_SECURITY_ADMIN_PASSWORD for grafana admin password}
+      WA_PROMETHEUS_ENDPOINT: ${WA_PROMETHEUS_ENDPOINT:-http://prometheus:9090}
+    depends_on:
+      - 'prometheus'
