@@ -1,0 +1,60 @@
+version: '3'
+
+volumes:
+  whatsappMedia:
+    driver: local
+  postgresData:
+    driver: local
+
+services:
+  db:
+    image: postgres:10.6
+    command: "-p 3306 -N 500"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_USER: root
+    expose:
+        - "33060"
+    ports:
+        - "33060:3306"
+    volumes:
+     - postgresData:/var/lib/postgresql/data
+    network_mode: bridge
+  wacore:
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.21.4 docker-compose <command> <options>)}
+    command: ["/opt/whatsapp/bin/wait_on_postgres.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
+    volumes:
+     - whatsappMedia:/usr/local/wamedia
+    env_file:
+      - db.env
+    environment:
+      # This is the version of the docker templates being used to run WhatsApp Business API
+      WA_RUNNING_ENV_VERSION: v2.2.3
+      ORCHESTRATION: DOCKER-COMPOSE
+    depends_on:
+      - "db"
+    network_mode: bridge
+    links:
+      - db
+  waweb:
+    image: docker.whatsapp.biz/web:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.21.4 docker-compose <command> <options>)}
+    command: ["/opt/whatsapp/bin/wait_on_postgres.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
+    ports:
+     - "9090:443"
+    volumes:
+     - whatsappMedia:/usr/local/wamedia
+    env_file:
+      - db.env
+    environment:
+      WACORE_HOSTNAME: wacore
+      # This is the version of the docker templates being used to run WhatsApp Business API
+      WA_RUNNING_ENV_VERSION: v2.2.3
+      ORCHESTRATION: DOCKER-COMPOSE
+    depends_on:
+      - "db"
+      - "wacore"
+    links:
+      - db
+      - wacore
+    network_mode: bridge
