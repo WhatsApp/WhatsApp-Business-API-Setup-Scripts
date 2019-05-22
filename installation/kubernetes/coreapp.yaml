@@ -118,10 +118,10 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
-      #   volumeMounts:
-      #   - name: whatsapp-media
-      #     mountPath: /usr/local/wamedia
-      # volumes:
-      # - name: whatsapp-media
-      #   persistentVolumeClaim:
-      #     claimName: media-volume-claim
+        volumeMounts:
+        - name: whatsapp-media
+          mountPath: /usr/local/wamedia
+      volumes:
+      - name: whatsapp-media
+        persistentVolumeClaim:
+          claimName: media-volume-claim
