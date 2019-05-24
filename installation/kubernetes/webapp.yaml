@@ -1,0 +1,98 @@
+# Copyright (c) Facebook, Inc. and its affiliates.
+
+# This source code is licensed under the MIT license found in the
+# LICENSE file in the root directory of this source tree.
+
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: whatsapp-web-autoscaler
+  namespace: default
+spec:
+  maxReplicas: 3
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: whatsapp-web-deployment
+  targetCPUUtilizationPercentage: 60
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whatsapp-web-service
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+  - port: 443
+    targetPort: 443
+    protocol: TCP
+    name: web
+  selector:
+    name: whatsapp-web
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: whatsapp-web-deployment
+  namespace: default
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: whatsapp-web
+    spec:
+      restartPolicy: "Always"
+      containers:
+      - name: whatsapp-web
+        image: docker.whatsapp.biz/web:v$VERSION
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory : 128Mi
+          requests:
+            cpu: "0.15"
+            memory : 128Mi
+        ports:
+        - containerPort: 443
+          protocol: TCP
+          name: web
+        env:
+        - name: WA_DB_ENGINE
+          valueFrom:
+            secretKeyRef:
+              name: whatsapp-config
+              key: wa-db-engine
+        - name: WA_APP_MULTICONNECT
+          value: '1'
+        - name: WA_DB_HOSTNAME
+          valueFrom:
+            secretKeyRef:
+              name: whatsapp-config
+              key: wa-db-hostname
+        - name: WA_DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: whatsapp-config
+              key: wa-db-port
+        - name: WA_DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: whatsapp-config
+              key: wa-db-username
+        - name: WA_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: whatsapp-config
+              key: wa-db-password
+        - name: WA_WEB_SERVERNAME
+          value: 'whatsapp-web-service'
+      #   volumeMounts:
+      #   - name: whatsapp-media
+      #     mountPath: /usr/local/wamedia
+      # volumes:
+      # - name: whatsapp-media
+      #   persistentVolumeClaim:
+      #     claimName: media-volume-claim
