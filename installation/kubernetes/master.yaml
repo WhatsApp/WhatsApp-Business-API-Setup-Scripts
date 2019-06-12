@@ -10,7 +10,7 @@ metadata:
   namespace: default
 spec:
   maxReplicas: 3
-  minReplicas: 1
+  minReplicas: 2
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
