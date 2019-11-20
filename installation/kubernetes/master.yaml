@@ -44,13 +44,16 @@ spec:
   selector:
     name: whatsapp-master
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: whatsapp-master-deployment
   namespace: default
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      name: whatsapp-master
   template:
     metadata:
       labels:
