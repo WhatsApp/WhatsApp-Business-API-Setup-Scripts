@@ -12,7 +12,7 @@ spec:
   maxReplicas: 3
   minReplicas: 1
   scaleTargetRef:
-    apiVersion: extensions/v1beta1
+    apiVersion: apps/v1
     kind: Deployment
     name: whatsapp-web-deployment
   targetCPUUtilizationPercentage: 60
@@ -32,13 +32,16 @@ spec:
   selector:
     name: whatsapp-web
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: whatsapp-web-deployment
   namespace: default
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      name: whatsapp-web
   template:
     metadata:
       labels:
