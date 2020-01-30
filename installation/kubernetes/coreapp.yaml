@@ -117,7 +117,12 @@ spec:
             secretKeyRef:
               name: whatsapp-config
               key: wa-db-password
-        - name: COREAPP_HOSTNAME
+        - name: WA_DB_CONNECTION_IDLE_TIMEOUT
+          valueFrom:
+            secretKeyRef:
+              name: whatsapp-config
+              key: wa-db-connection-idle-timeout
+         - name: COREAPP_HOSTNAME
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
