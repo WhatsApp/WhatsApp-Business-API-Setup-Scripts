@@ -1,4 +1,4 @@
-# WhatsApp Business API Setup Scripts
+# WhatsApp Business API Setup Scripts  (English)
 
 This repository includes all configuration scripts used to set up WhatsApp Business API using docker-compose.
 
@@ -13,9 +13,9 @@ WhatsApp Business API Setup Scripts is [MIT licensed](./LICENSE).
 
 
 
-#Español
 
-# Scripts de configuración de la API empresarial de WhatsApp
+
+# Scripts de configuración de la API empresarial de WhatsApp (Español)
 
 Este repositorio incluye todos los scripts de configuración que se utilizan para configurar la API empresarial de WhatsApp mediante docker-compose.
 
