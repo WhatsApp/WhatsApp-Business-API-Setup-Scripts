@@ -13,7 +13,7 @@ volumes:
 
 services:
   db:
-    image: mysql:5.7.31
+    image: mysql:5.7.26
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: testpass
