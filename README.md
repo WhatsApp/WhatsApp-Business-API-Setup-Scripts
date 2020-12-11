@@ -23,4 +23,4 @@ Para obtener más detalles relacionados con la API de WhatsApp Business, visite 
 
 ## Licencia
 
-Los scripts de configuración de la API de WhatsApp Business tienen [licencia MIT] (./LICENSE).
+Los scripts de configuración de la API de WhatsApp Business tienen [licencia MIT](./LICENSE).
