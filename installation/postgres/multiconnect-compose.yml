@@ -26,7 +26,7 @@ services:
     volumes:
      - postgresData:/var/lib/postgresql/data
   waweb:
-    image: docker.whatsapp.biz/web:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.31.4 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/web:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
     command: ["/opt/whatsapp/bin/wait_on_postgres.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
      - "9090:443"
@@ -44,7 +44,7 @@ services:
     depends_on:
       - "db"
   master1:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.31.4 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_postgres.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -64,7 +64,7 @@ services:
     depends_on:
       - "waweb"
   master2:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.31.4 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_postgres.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -84,7 +84,7 @@ services:
     depends_on:
       - "waweb"
   wacore1:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.31.4 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_postgres.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -103,7 +103,7 @@ services:
     depends_on:
       - "master1"
   wacore2:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.31.4 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_postgres.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -122,7 +122,7 @@ services:
     depends_on:
       - "master1"
   wacore3:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.31.4 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_postgres.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
