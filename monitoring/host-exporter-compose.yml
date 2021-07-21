@@ -20,7 +20,7 @@ services:
       - /dev/disk/:/dev/disk:ro
     privileged: true
   node-exporter:
-    image: prom/node-exporter:v0.16.0
+    image: prom/node-exporter:v1.2.0
     restart: always
     ports:
       - 9100:9100
