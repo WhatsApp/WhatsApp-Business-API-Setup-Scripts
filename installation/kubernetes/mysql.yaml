@@ -67,6 +67,10 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
+        securityContext:
+          capabilities:
+            drop:
+              - MKNOD
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:

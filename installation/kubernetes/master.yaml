@@ -126,6 +126,10 @@ spec:
         volumeMounts:
         - name: whatsapp-media
           mountPath: /usr/local/wamedia
+        securityContext:
+          capabilities:
+            drop:
+              - MKNOD
       volumes:
       - name: whatsapp-media
         persistentVolumeClaim:
