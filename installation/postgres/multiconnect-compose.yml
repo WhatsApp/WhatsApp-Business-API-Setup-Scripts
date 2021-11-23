@@ -13,7 +13,7 @@ volumes:
 
 services:
   db:
-    image: postgres:10.6
+    image: postgres:10.19
     command: "-p 3306 -N 500"
     restart: always
     environment:
