@@ -15,3 +15,5 @@ services:
     environment:
       WA_DB_UPGRADE: 1
     network_mode: bridge
+    cap_drop:
+      - MKNOD

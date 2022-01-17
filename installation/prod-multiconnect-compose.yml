@@ -11,7 +11,7 @@ volumes:
 
 services:
   waweb:
-    image: docker.whatsapp.biz/web:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/web:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.37.1 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -30,8 +30,10 @@ services:
       # this is the version of the docker templates being used to run WhatsApp Business API
       WA_RUNNING_ENV_VERSION: v2.2.3
       ORCHESTRATION: DOCKER-COMPOSE
+    cap_drop:
+      - MKNOD
   wacore:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.37.1 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -53,8 +55,10 @@ services:
       # This is the version of the docker templates being used to run WhatsApp Business API
       WA_RUNNING_ENV_VERSION: v2.2.3
       ORCHESTRATION: DOCKER-COMPOSE
+    cap_drop:
+      - MKNOD
   master:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.37.1 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -81,3 +85,5 @@ services:
       # this is the version of the docker templates being used to run WhatsApp Business API
       WA_RUNNING_ENV_VERSION: v2.2.3
       ORCHESTRATION: DOCKER-COMPOSE
+    cap_drop:
+      - MKNOD

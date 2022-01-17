@@ -58,7 +58,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql:5.7.26
+        image: mysql:5.7.35
         ports:
         - containerPort: 3306
         env:
@@ -67,6 +67,10 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
+        securityContext:
+          capabilities:
+            drop:
+              - MKNOD
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:

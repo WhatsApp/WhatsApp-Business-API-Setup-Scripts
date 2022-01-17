@@ -13,7 +13,7 @@ volumes:
 
 services:
   db:
-    image: mysql:5.7.26
+    image: mysql:5.7.35
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: testpass
@@ -25,8 +25,10 @@ services:
         - "33060:3306"
     volumes:
      - mysqlData:/var/lib/mysql
+    cap_drop:
+     - MKNOD
   waweb:
-    image: docker.whatsapp.biz/web:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/web:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.37.1 docker-compose <command> <options>)}
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
      - "9090:443"
@@ -43,8 +45,10 @@ services:
       ORCHESTRATION: DOCKER-COMPOSE
     depends_on:
       - "db"
+    cap_drop:
+      - MKNOD
   master1:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.37.1 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -63,8 +67,10 @@ services:
       ORCHESTRATION: DOCKER-COMPOSE
     depends_on:
       - "waweb"
+    cap_drop:
+      - MKNOD
   master2:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.37.1 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -83,8 +89,10 @@ services:
       ORCHESTRATION: DOCKER-COMPOSE
     depends_on:
       - "waweb"
+    cap_drop:
+      - MKNOD
   wacore1:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.37.1 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -102,8 +110,10 @@ services:
       ORCHESTRATION: DOCKER-COMPOSE
     depends_on:
       - "master1"
+    cap_drop:
+      - MKNOD
   wacore2:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.37.1 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -121,8 +131,10 @@ services:
       ORCHESTRATION: DOCKER-COMPOSE
     depends_on:
       - "master1"
+    cap_drop:
+      - MKNOD
   wacore3:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.37.1 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -140,3 +152,5 @@ services:
       ORCHESTRATION: DOCKER-COMPOSE
     depends_on:
       - "master1"
+    cap_drop:
+      - MKNOD

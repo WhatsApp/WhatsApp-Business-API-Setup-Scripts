@@ -11,7 +11,7 @@ volumes:
 
 services:
   wacore:
-    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.37.1 docker-compose <command> <options>)}
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     volumes:
      - whatsappMedia:/usr/local/wamedia
@@ -22,8 +22,10 @@ services:
       WA_RUNNING_ENV_VERSION: v2.2.3
       ORCHESTRATION: DOCKER-COMPOSE
     network_mode: bridge
+    cap_drop:
+      - MKNOD
   waweb:
-    image: docker.whatsapp.biz/web:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.33.3 docker-compose <command> <options>)}
+    image: docker.whatsapp.biz/web:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.37.1 docker-compose <command> <options>)}
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
      - "9090:443"
@@ -41,3 +43,5 @@ services:
     links:
       - wacore
     network_mode: bridge
+    cap_drop:
+      - MKNOD
