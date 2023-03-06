@@ -51,6 +51,7 @@ spec:
       containers:
       - name: whatsapp-web
         image: docker.whatsapp.biz/web:v$VERSION
+        command: ["/opt/whatsapp/bin/launch_within_docker.sh"]
         imagePullPolicy: IfNotPresent
         resources:
           limits:
