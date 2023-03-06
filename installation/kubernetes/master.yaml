@@ -63,6 +63,7 @@ spec:
       containers:
       - name: whatsapp-master
         image: docker.whatsapp.biz/coreapp:v$VERSION
+        command: ["/opt/whatsapp/bin/launch_within_docker.sh"]
         imagePullPolicy: IfNotPresent
         resources:
           limits:
