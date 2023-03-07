@@ -98,15 +98,15 @@ spec:
             path: /
             port: web
             scheme: HTTPS
-        initialDelaySeconds: 30
-        timeoutSeconds: 10
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
         readinessProbe:
           httpGet:
             path: /
             port: web
             scheme: HTTPS
-        initialDelaySeconds: 30
-        timeoutSeconds: 10
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
         volumeMounts:
         - name: whatsapp-media
           mountPath: /usr/local/wamedia
