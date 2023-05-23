@@ -13,6 +13,7 @@ volumes:
 
 services:
   db:
+    platform: linux/x86_64
     image: mysql:5.7.35
     restart: always
     environment:
@@ -28,6 +29,7 @@ services:
     cap_drop:
      - MKNOD
   waweb:
+    platform: linux/x86_64
     image: docker.whatsapp.biz/web:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.41.2 docker-compose <command> <options>)}
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
     ports:
@@ -48,6 +50,7 @@ services:
     cap_drop:
       - MKNOD
   master1:
+    platform: linux/x86_64
     image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.41.2 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
@@ -70,6 +73,7 @@ services:
     cap_drop:
       - MKNOD
   master2:
+    platform: linux/x86_64
     image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.41.2 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
@@ -92,6 +96,7 @@ services:
     cap_drop:
       - MKNOD
   wacore1:
+    platform: linux/x86_64
     image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.41.2 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
@@ -113,6 +118,7 @@ services:
     cap_drop:
       - MKNOD
   wacore2:
+    platform: linux/x86_64
     image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.41.2 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
@@ -134,6 +140,7 @@ services:
     cap_drop:
       - MKNOD
   wacore3:
+    platform: linux/x86_64
     image: docker.whatsapp.biz/coreapp:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.41.2 docker-compose <command> <options>)}
     restart: unless-stopped
     command: ["/opt/whatsapp/bin/wait_on_mysql.sh", "/opt/whatsapp/bin/launch_within_docker.sh"]
