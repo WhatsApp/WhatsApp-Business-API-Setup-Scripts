@@ -2,7 +2,6 @@
 
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
-
 kind: PersistentVolume
 apiVersion: v1
 metadata:
@@ -58,7 +57,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql:5.7.35
+        image: mysql:8.0.33
         ports:
         - containerPort: 3306
         env:
@@ -66,7 +65,10 @@ spec:
           value: testpass
         volumeMounts:
         - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
+          mountPath: /var/lib/
+        - name: mysql-config-volume
+          mountPath: /etc/mysql/conf.d/default_auth.cnf
+          subPath: default_auth
         securityContext:
           capabilities:
             drop:
@@ -75,3 +77,6 @@ spec:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: mysql-volume-claim
+      - name: mysql-config-volume
+        configMap:
+          name: mysql-config

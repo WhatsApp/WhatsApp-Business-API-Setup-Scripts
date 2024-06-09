@@ -8,6 +8,7 @@ version: '3'
 # on each host, run docker-compose -f host-exporter-compose.yml up -d
 services:
   cadvisor:
+    platform: linux/x86_64
     image: gcr.io/cadvisor/cadvisor:v0.45.0
     restart: always
     ports:
