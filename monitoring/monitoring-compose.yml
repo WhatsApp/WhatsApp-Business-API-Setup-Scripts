@@ -21,6 +21,7 @@ services:
     environment:
       DATA_SOURCE_NAME: "${WA_DB_USERNAME:?Missing env WA_DB_USERNAME}:${WA_DB_PASSWORD:?Missing env WA_DB_PASSWORD}@(${WA_DB_HOSTNAME:?Missing env WA_DB_HOSTNAME}:${WA_DB_PORT:?Missing env WA_DB_PORT})/"
   prometheus:
+    platform: linux/x86_64
     image: docker.whatsapp.biz/prometheus:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.31.4 docker-compose <command> <options>)}
     user: "root"
     restart: always
@@ -41,6 +42,7 @@ services:
     depends_on:
       - 'mysqld-exporter'
   grafana:
+    platform: linux/x86_64
     image: docker.whatsapp.biz/grafana:v${WA_API_VERSION:?Run docker-compose with env var WA_API_VERSION (ex. WA_API_VERSION=2.31.4 docker-compose <command> <options>)}
     restart: always
     ports:
