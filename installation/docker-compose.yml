@@ -45,8 +45,6 @@ services:
     depends_on:
       - "db"
     network_mode: bridge
-    links:
-      - db
     cap_drop:
       - MKNOD
   waweb:
@@ -67,9 +65,6 @@ services:
     depends_on:
       - "db"
       - "wacore"
-    links:
-      - db
-      - wacore
     network_mode: bridge
     cap_drop:
       - MKNOD

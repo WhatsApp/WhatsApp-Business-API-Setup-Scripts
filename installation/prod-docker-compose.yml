@@ -40,8 +40,6 @@ services:
       ORCHESTRATION: DOCKER-COMPOSE
     depends_on:
       - "wacore"
-    links:
-      - wacore
     network_mode: bridge
     cap_drop:
       - MKNOD
