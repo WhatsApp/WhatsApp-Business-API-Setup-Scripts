@@ -1,4 +1,5 @@
 # Contributing to WhatsApp Business API Setup Scripts
+HELLO WORLD
 We want to make contributing to this project as easy and transparent as
 possible.
 
@@ -28,6 +29,31 @@ support channel at <https://business.facebook.com/direct-support>.
 Facebook has a [bounty program](https://www.facebook.com/whitehat/) for the safe
 disclosure of security bugs. In those cases, please go through the process
 outlined on that page and do not file a public issue.
+
+## Issues
+<Lock-In Access>
+<Users can easily do selective messaging and send docs/images in large WhatsApp/Instagram groups with access permissions.>
+
+ Description
+- What this project is: This request is all about modifying the way of messaging in large groups with selective messaging and giving viewing access and hiding the message and doc/images from not concerned members.
+
+- Why it exists or what problem it solves: It gives more security for users to message in large groups of people with security and access features. Furthermore, sending same information individually with different flow user can send it in one flow with access feature. It definitely saves time of users.
+
+For Example: An HR of any company wants to give some particular document to some of the members only and instead of sending them individually the HR sends the doc in the group with giving access to those members only(No need of nested groups). Bang on! Problem solve!
+
+Want another example? here it is: Users do not have to save everyone's number they can just share information with the access feature in the group. Sorted!
+
+Who can use- All Meta Users
+
+ Features
+
+- Selective Messaging – Send texts, docs, or media to chosen members within the group.
+
+- Granular Access Control – Grant or restrict viewing permissions for sensitive content.
+
+- Efficient Communication – Save time by avoiding repeated individual messaging or creating nested groups and avoid saving irrelevant contacts.
+
+- Privacy & Security – Hide irrelevant or confidential content from non-concerned members.
 
 ## License
 By contributing to WhatsApp Business API Setup Scripts, you agree that your contributions will be licensed
