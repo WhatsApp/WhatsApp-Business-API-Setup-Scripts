@@ -1,5 +1,7 @@
 # WhatsApp Business API Setup Scripts  (English)
 
+**Warning: The WhatsApp Business On-premises API is now deprecated. Please use the WhatsApp Business Cloud API instead. For more information, please visit: https://developers.facebook.com/docs/whatsapp/cloud-api.**
+
 This repository includes all configuration scripts used to set up WhatsApp Business API using docker-compose.
 
 For more details related to WhatsApp Business API, please visit the documentation at: https://developers.facebook.com/docs/whatsapp
